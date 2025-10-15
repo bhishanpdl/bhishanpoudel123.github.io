@@ -1,0 +1,220 @@
+.summary {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.section {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border-left: 4px solid #007bff;
+}
+
+.unemployment-section {
+    border-left-color: #ffc107;
+    background: #fff8e1;
+}
+
+.recovery-section {
+    border-left-color: #4caf50;
+    background: #e8f5e9;
+}
+
+.income-projection-section {
+    border-left-color: #9b59b6;
+    background: #f8f9fa;
+}
+
+.comparison {
+    display: flex;
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.job-box {
+    flex: 1;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.old-job {
+    background: #ffebee;
+    border-left: 4px solid #f44336;
+}
+
+.new-job {
+    background: #e8f5e9;
+    border-left: 4px solid #4caf50;
+}
+
+.contract-job {
+    background: #f3e5f5;
+    border-left: 4px solid #9b59b6;
+}
+
+.breakeven-details {
+    background: #e3f2fd;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+.contract-details {
+    background: white;
+    padding: 15px;
+    border-radius: 6px;
+    margin: 15px 0;
+    border-left: 3px solid #9b59b6;
+}
+
+.salary-details {
+    display: flex;
+    gap: 20px;
+    margin: 15px 0;
+}
+
+.salary-details > div {
+    flex: 1;
+    padding: 10px;
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.time-details {
+    font-size: 14px;
+    color: #555;
+}
+
+.error-message {
+    color: #d32f2f;
+    background: #ffebee;
+    padding: 15px;
+    border-radius: 6px;
+    border-left: 4px solid #d32f2f;
+    margin: 20px 0;
+}
+
+.holidays-list {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border-left: 4px solid #9b59b6;
+    display: none;
+}
+
+.holidays-list.active {
+    display: block;
+}
+
+.holidays-list ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.holidays-list li {
+    margin-bottom: 8px;
+}
+
+.contract-duration {
+    background: #f3e5f5;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border-left: 4px solid #9b59b6;
+}
+
+.benefits-comparison {
+    background: #e8f4f8;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 15px 0;
+    border-left: 4px solid #3498db;
+}
+
+.income-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.income-table th {
+    background: #3498db;
+    color: white;
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 600;
+}
+
+.income-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.income-table tr:hover {
+    background: #f8f9fa;
+}
+
+.income-table .year-header {
+    background: #2c3e50;
+    color: white;
+    font-weight: bold;
+}
+
+.income-table .positive {
+    color: #27ae60;
+    font-weight: 600;
+}
+
+.income-table .negative {
+    color: #e74c3c;
+    font-weight: 600;
+}
+
+.income-table .total-row {
+    background: #f8f9fa;
+    font-weight: 600;
+    border-top: 2px solid #3498db;
+}
+
+.projection-notes {
+    background: #e8f4f8;
+    padding: 15px;
+    border-radius: 6px;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.projection-notes ul {
+    margin: 10px 0 0 0;
+    padding-left: 20px;
+}
+
+.projection-notes li {
+    margin-bottom: 5px;
+}
+
+@media (max-width: 768px) {
+    .comparison, .salary-details {
+        flex-direction: column;
+    }
+
+    .income-table {
+        font-size: 14px;
+    }
+
+    .income-table th,
+    .income-table td {
+        padding: 8px 10px;
+    }
+}
