@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interview Locations Map</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+    <title>Interview Locations Map - Subfolders</title>
     <style>
         * {
             margin: 0;
@@ -17,11 +16,14 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
+            max-width: 600px;
+            width: 100%;
             background: white;
             border-radius: 16px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
@@ -31,12 +33,12 @@
         .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 40px;
+            padding: 40px 30px;
             text-align: center;
         }
         
         .header h1 {
-            font-size: 2.5em;
+            font-size: 2.2em;
             margin-bottom: 10px;
             font-weight: 700;
         }
@@ -46,120 +48,43 @@
             opacity: 0.95;
         }
         
-        #map {
-            width: 100%;
-            height: 600px;
+        .content {
+            padding: 40px;
         }
         
-        .legend {
-            padding: 30px 40px;
-            background: #f8f9fa;
+        ul {
+            list-style: none;
+            margin-top: 20px;
         }
         
-        .legend h3 {
+        li {
             margin-bottom: 15px;
-            color: #333;
-            font-size: 1.3em;
-        }
-        
-        .legend-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 12px;
-            font-size: 1.05em;
-        }
-        
-        .legend-icon {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            margin-right: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            color: white;
-        }
-        
-        .home-icon {
-            background: #10b981;
-        }
-        
-        .interview-icon {
-            background: #3b82f6;
-        }
-        
-        .important-icon {
-            background: #f59e0b;
-        }
-        
-        .leaflet-popup-content-wrapper {
             border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: transform 0.2s, box-shadow 0.2s;
         }
         
-        .leaflet-popup-content {
-            margin: 16px;
-            font-size: 14px;
-            min-width: 250px;
+        li:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.2);
         }
         
-        .popup-title {
-            font-weight: 700;
-            font-size: 18px;
+        a {
+            display: block;
+            padding: 18px 25px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            text-decoration: none;
             color: #333;
-            margin-bottom: 5px;
+            font-weight: 500;
+            font-size: 1.1em;
+            border: 2px solid transparent;
+            transition: all 0.2s;
         }
         
-        .popup-type {
-            color: #666;
-            font-size: 13px;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #e5e7eb;
-        }
-        
-        .distance-section {
-            margin-top: 10px;
-        }
-        
-        .distance-title {
-            font-weight: 600;
-            font-size: 14px;
-            color: #333;
-            margin-bottom: 8px;
-        }
-        
-        .distance-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 6px 0;
-            font-size: 13px;
-            border-bottom: 1px solid #f3f4f6;
-        }
-        
-        .distance-item:last-child {
-            border-bottom: none;
-        }
-        
-        .distance-city {
-            color: #555;
-        }
-        
-        .distance-value {
-            font-weight: 600;
-            color: #3b82f6;
-        }
-        
-        .distance-label {
+        a:hover {
             background: white;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: 600;
-            color: #10b981;
-            border: 2px solid #10b981;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-color: #667eea;
+            color: #667eea;
         }
         
         @media (max-width: 768px) {
@@ -171,28 +96,34 @@
                 font-size: 1em;
             }
             
-            #map {
-                height: 400px;
+            .content {
+                padding: 25px;
             }
             
-            .legend {
-                padding: 20px;
+            a {
+                padding: 15px 20px;
+                font-size: 1em;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-
+        <div class="header">
+            <h1>??? Interview Locations</h1>
+            <p>Select a region to view interview locations</p>
+        </div>
+        
+        <div class="content">
+            <p style="color: #666; font-size: 1.1em; margin-bottom: 10px;">Look at the subfolders for the map:</p>
+            <ul>
+                <li><a href="https://bhishanpoudel123.github.io/map/job">?? job apply places</a></li>
+                <li><a href="https://bhishanpoudel123.github.io/map/addr">?? addr</a></li>
+                <li><a href="https://bhishanpoudel123.github.io/map/addr_oh">?? addr_oh</a></li>
+                <li><a href="https://bhishanpoudel123.github.io/map/addr_tx">?? addr_tx</a></li>
+                <li><a href="https://bhishanpoudel123.github.io/map/addr_ny">?? addr_ny</a></li>
+            </ul>
+        </div>
     </div>
-<p>Look at the subfolders for the map:</p>
-<ul>
-  <li><a href="https://bhishanpoudel123.github.io/map/job">job apply places</a></li>
-  <li><a href="https://bhishanpoudel123.github.io/map/addr">addr</a></li>
-  <li><a href="https://bhishanpoudel123.github.io/map/addr_oh">addr_oh</a></li>
-  <li><a href="https://bhishanpoudel123.github.io/map/addr_tx">addr_tx</a></li>
-  <li><a href="https://bhishanpoudel123.github.io/map/addr_ny">addr_ny</a></li>
-</ul>
-
 </body>
 </html>
