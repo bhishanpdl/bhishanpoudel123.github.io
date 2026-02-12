@@ -119,5 +119,15 @@ const addresses = [
     "city": "New York",
     "state": "NY",
     "city_state": "New York, NY"
+  },
+  {
+  "id": 13,
+  "address": "140 HACKENSACK ST APT 203, EAST RUTHERFORD NJ 07073",
+  "start_date": "2026-02-15",
+  "latitude": 40.8340,
+  "longitude": -74.0971,
+  "city": "East Rutherford",
+  "state": "NJ",
+  "city_state": "East Rutherford, NJ"
   }
 ];
