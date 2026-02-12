@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<title>My Journey Across America</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+	<style>
+		body {
+			font-family: Inter, system-ui, Segoe UI, Roboto, Arial, sans-serif;
+			margin: 0;
+			background: #f9fafb;
+			color: #111827;
+		}
+
+		header {
+			background: linear-gradient(90deg, #60a5fa, #3b82f6);
+			color: white;
+			padding: 32px 20px;
+			text-align: center;
+		}
+
+		header h1 {
+			margin: 0;
+			font-size: 2rem;
+		}
+
+		header p {
+			margin: 8px 0 0;
+			font-size: 1rem;
+		}
+
+		main {
+			max-width: 1100px;
+			margin: 0 auto;
+			padding: 20px;
+		}
+
+		section {
+			margin-bottom: 28px;
+		}
+
+		h2 {
+			border-bottom: 3px solid #3b82f6;
+			padding-bottom: 6px;
+			margin-bottom: 12px;
+		}
+
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			background: white;
+			border-radius: 8px;
+			overflow: hidden;
+			font-size: 14px;
+		}
+
+		th,
+		td {
+			border: 1px solid #e5e7eb;
+			padding: 10px;
+			text-align: left;
+		}
+
+		th {
+			background: #f3f4f6;
+			font-weight: 600;
+		}
+
+		tr:nth-child(even) {
+			background: #fafafa;
+		}
+
+		.summary {
+			background: #fff;
+			border: 1px solid #e5e7eb;
+			border-radius: 8px;
+			padding: 16px;
+			display: flex;
+			flex-wrap: wrap;
+			gap: 12px;
+			font-size: 15px;
+		}
+
+		.summary div {
+			flex: 1 1 200px;
+			background: #f9fafb;
+			padding: 12px;
+			border-radius: 6px;
+			border-left: 4px solid #3b82f6;
+		}
+
+		.summary strong {
+			display: block;
+			font-size: 16px;
+			margin-bottom: 6px;
+		}
+
+		#map {
+			width: 100%;
+			height: 500px;
+			border-radius: 8px;
+			border: 1px solid #e5e7eb;
+		}
+
+		footer {
+			margin: 20px 0;
+			text-align: center;
+			font-size: 13px;
+			color: #6b7280;
+		}
+
+		/* Mobile adjustments */
+		@media(max-width:768px) {
+			header h1 {
+				font-size: 1.5rem;
+			}
+
+			.summary {
+				flex-direction: column;
+			}
+
+			#map {
+				height: 360px;
+			}
+
+			table {
+				font-size: 12px;
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>🧭 My Journey Across America</h1>
+		<p>From Athens, OH ➡️ New York City ➡️ Dallas — powered by my bank statements 🏦📅</p>
+	</header>
+
+	<main>
+		<!-- Summary Panel -->
+		<section>
+			<h2>📌 Movement Summary</h2>
+			<div class="summary">
+				<div>
+					<strong>Previous</strong>
+					<span id="prevPlace">—</span>
+				</div>
+				<div style="border-left-color:#10b981">
+					<strong>Current 🏠</strong>
+					<span id="currentPlace">—</span><br>
+					<small id="currentDate"></small>
+				</div>
+				<div>
+					<strong>Next</strong>
+					<span id="nextPlace">—</span>
+				</div>
+				<div>
+					<strong>Time Spent</strong>
+					<span id="timeSpent">—</span>
+				</div>
+			</div>
+		</section>
+
+		<!-- All Residences Table -->
+		<section>
+			<h2>📊 All Residences (Chronological)</h2>
+			<div style="overflow-x:auto">
+				<table id="addressesTable">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Start Date</th>
+							<th>City / State</th>
+							<th>Full Address</th>
+							<th>Days Until Next</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+			</div>
+		</section>
+
+		<!-- Map -->
+		<section>
+			<h2>🗺️ Map of My Moves</h2>
+			<div id="map"></div>
+		</section>
+	</main>
+
+	<footer>
+		Static site using <code>index.html</code> + <code>addresses.js</code> • Leaflet © OpenStreetMap contributors
+	</footer>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+	<script src="addresses.js"></script>
+	<script>
+		let data = (typeof addresses !== "undefined") ? addresses : [];
+		data.sort((a, b) => a.id - b.id);
+
+		function parseISO(d) { const dt = new Date(d); return isNaN(dt) ? null : dt; }
+		for (let i = 0; i < data.length; i++) {
+			const cur = data[i];
+			cur._parsed_start = parseISO(cur.start_date);
+			if (i < data.length - 1) {
+				const next = data[i + 1];
+				const nextParsed = parseISO(next.start_date);
+				cur.time_spent_days = (cur._parsed_start && nextParsed) ? Math.round((nextParsed - cur._parsed_start) / (1000 * 60 * 60 * 24)) : null;
+			} else {
+				cur.time_spent_days = null;
+			}
+		}
+
+		// Fill table
+		const tbody = document.querySelector("#addressesTable tbody");
+		tbody.innerHTML = "";
+		data.forEach(d => {
+			const tr = document.createElement("tr");
+			tr.innerHTML = `<td>${d.id}</td>
+    <td>${d.start_date}</td>
+    <td>${d.city_state || ""}</td>
+    <td>${d.address}</td>
+    <td>${d.time_spent_days === null ? "—" : d.time_spent_days}</td>`;
+			tbody.appendChild(tr);
+		});
+
+		// Summary (prev/current/next)
+		function updateSummary() {
+			if (!data.length) return;
+			const last = data[data.length - 1];
+			const idx = data.length - 1;
+			const prev = (idx > 0) ? data[idx - 1] : null;
+			document.getElementById("prevPlace").textContent = prev ? (prev.city_state + " (" + prev.start_date + ")") : "—";
+			document.getElementById("currentPlace").textContent = last.city_state;
+			document.getElementById("currentDate").textContent = "Since " + last.start_date;
+			document.getElementById("nextPlace").textContent = "—"; // no next after current
+			document.getElementById("timeSpent").textContent = prev ? (prev.time_spent_days + " days at previous place") : "—";
+		}
+		updateSummary();
+
+		// Map
+		const map = L.map('map').setView([39.5, -98.35], 4);
+		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OpenStreetMap contributors' }).addTo(map);
+
+		const latlngs = [];
+		data.forEach((d, idx) => {
+			if (d.latitude && d.longitude) {
+				const coords = [d.latitude, d.longitude];
+				latlngs.push(coords);
+				const isCurrent = (idx === data.length - 1);
+				const marker = L.marker(coords).addTo(map)
+					.bindPopup(`<b>${d.city_state}</b><br>${d.address}<br><small>Start: ${d.start_date}</small>`);
+				if (isCurrent) { marker.openPopup(); }
+			}
+		});
+		if (latlngs.length > 1) {
+			L.polyline(latlngs, { color: "#3b82f6", weight: 4 }).addTo(map);
+			map.fitBounds(L.latLngBounds(latlngs), { padding: [40, 40] });
+		}
+	</script>
+</body>
+
+</html>

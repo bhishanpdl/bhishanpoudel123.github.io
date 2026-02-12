@@ -3,19 +3,12 @@
 
 const locations = [
     {
-        name: "New York City, NY",
-        coords: [40.7128, -74.0060],
+        name: "East Rutherford, NJ",
+        coords: [40.7622, -73.9497],
         type: "home",
-        description: "Home Base",
+        description: "Home",
         short_description: "Home" // Short description for distance list
-    },
-    {
-        name: "Houston, TX",
-        coords: [29.7604, -95.3698],
-        type: "interview",
-        description: "TGS",
-        short_description: "TGS" // Short description for distance list
-    },
+    }
     {
         name: "Rutherford, NJ",
         coords: [40.8265, -74.1068],

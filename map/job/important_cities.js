@@ -5,7 +5,7 @@ const fixedCities = [
     {
         name: "Boulder, CO",
         coords: [40.0150, -105.2705],
-        description: "Important place",
+        description: "Sanima House",
         short_description: "Sanima House"
     },
     {
